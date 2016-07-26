@@ -4,11 +4,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/walking"
         android:label="@string/app_name"
+        android:logo="@drawable/walking"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".KeepWalkingActivity">
+        <activity android:name=".KeepWalkingListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
