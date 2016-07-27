@@ -29,7 +29,7 @@ public class KeepWalkingLab {
 
         for (int i = 1; i <= 100; i++) {
             KeepWalking keepWalking = new KeepWalking();
-            keepWalking.setTitle("Crime #" + i);
+            keepWalking.setTitle("Title #" + i);
 
             keepWalkingsList.add(keepWalking);
         }

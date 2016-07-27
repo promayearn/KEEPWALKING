@@ -1,8 +1,7 @@
 package com.augmentis.ayp.keepwalking;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,24 +22,22 @@ import java.util.UUID;
  */
 public class KeepWalkingFragment extends Fragment {
     private static final String KEEP_WALKING_UUID = "KeepWalkingFragment.KEEP_WALKING_UUID";
-    private static final String KEEP_WALKING_POSITION = "KeepWalkingFragment.KEEP_WALKING_POSITION";
 
     protected static final String TAG = "KeepWalkingFragment";
 
-    private KeepWalking keepWalking;
-    private EditText keepWalkingEditText;
-    private TextView keepWalkingTextView;
+    private EditText keepWalkingTitleEditText;
+    private TextView keepWalkingDateTextView;
     private Button keepWalkingSaveButton;
 
-    private int position;
+    private KeepWalking keepWalking;
 
     public KeepWalkingFragment() {
     }
 
-    public static KeepWalkingFragment newInstance(UUID crimeID, int position) {
+    public static KeepWalkingFragment newInstance(UUID keepWalkingUuid) {
+        Log.d(TAG, "new Instance");
         Bundle args = new Bundle();
-        args.putSerializable(KEEP_WALKING_UUID, crimeID);
-        args.putInt(KEEP_WALKING_POSITION, position);
+        args.putSerializable(KEEP_WALKING_UUID, keepWalkingUuid);
 
         KeepWalkingFragment keepWalkingFragment = new KeepWalkingFragment();
         keepWalkingFragment.setArguments(args);
@@ -48,60 +45,47 @@ public class KeepWalkingFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         UUID keepWalkingUuid = (UUID) getArguments().getSerializable(KEEP_WALKING_UUID);
-        position = getArguments().getInt(KEEP_WALKING_POSITION);
         keepWalking = KeepWalkingLab.getInstance(getActivity()).getKeepWalkingById(keepWalkingUuid);
-        Log.d(KeepWalkingListFragment.TAG, "keepWalking.getUuid() = " + keepWalking.getUuid());
-        Log.d(KeepWalkingListFragment.TAG, "keepWalking.getTitle() = " + keepWalking.getTitle());
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_keep_walking, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_keep_walking_new_data, container, false);
 
-        keepWalkingEditText = (EditText) v.findViewById(R.id.keep_walking_title);
-        keepWalkingEditText.setText(keepWalking.getTitle());
-        keepWalkingEditText.addTextChangedListener(new TextWatcher() {
+        keepWalkingTitleEditText = (EditText) v.findViewById(R.id.keep_walking_title);
+        keepWalkingTitleEditText.setText(keepWalking.getTitle());
+        keepWalkingTitleEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                keepWalking.setTitle(s.toString());
-//                addThisPositionToResult(position);
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                keepWalking.setTitle(charSequence.toString());
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable editable) {
 
             }
         });
 
-        keepWalkingTextView = (TextView) v.findViewById(R.id.keep_walking_present_date);
-        keepWalkingTextView.setText(getFormattedDate(keepWalking.getDate()));
+        keepWalkingDateTextView = (TextView) v.findViewById(R.id.keep_walking_present_date);
+        Date date = new Date();
+        keepWalkingDateTextView.setText(getFormattedDate(date));
 
         keepWalkingSaveButton = (Button) v.findViewById(R.id.keep_walking_save);
 
-        Intent intent = new Intent();
-        intent.putExtra("position", position);
-        Log.d(KeepWalkingListFragment.TAG, "send position back: " + position);
-        getActivity().setResult(Activity.RESULT_OK, intent);
         return v;
     }
-
 
     private String getFormattedDate(Date date) {
         return new SimpleDateFormat("dd MMMM yyyy").format(date);
     }
-
-//    private void addThisPositionToResult(int position) {
-//        if (getActivity() instanceof KeepWalkingActivity) {
-//            ((KeepWalkingActivity) getActivity()).addPageUpdate(position);
-//        }
-//    }
 }
