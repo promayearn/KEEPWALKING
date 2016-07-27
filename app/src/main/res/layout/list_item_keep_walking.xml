@@ -34,14 +34,14 @@
         android:background="@color/colorAccent" />
 
     <LinearLayout
-        android:gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/list_item_keep_walking_line_item_view"
+        android:gravity="bottom"
         android:padding="5dp">
 
         <Button
-
+            android:id="@+id/list_item_keep_walking_add_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"

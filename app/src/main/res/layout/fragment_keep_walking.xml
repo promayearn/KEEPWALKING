@@ -26,6 +26,14 @@
             android:textColor="@color/gray" />
 
         <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <TextView
             android:id="@+id/keep_walking_present_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

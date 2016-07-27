@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
  */
 public class KeepWalkingListActivity extends SingleFragmentActivity {
 
+    protected static final String TAG = "KeepWalkingListActivity";
+
     @Override
     protected Fragment onCreateFragment() {
         return new KeepWalkingListFragment();
