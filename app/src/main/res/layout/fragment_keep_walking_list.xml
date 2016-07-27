@@ -20,6 +20,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:text="Add"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            android:typeface="serif" />
     </LinearLayout>
 </RelativeLayout>

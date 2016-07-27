@@ -14,32 +14,44 @@
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:text="Title"
             android:textColor="@color/black"
-            android:textSize="32sp" />
+            android:textSize="24sp"
+            android:typeface="serif" />
 
         <EditText
             android:id="@+id/keep_walking_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@color/white"
             android:hint="Add Title"
-            android:textColor="@color/gray" />
+            android:paddingLeft="5dp"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            android:typeface="serif" />
 
         <TextView
             style="?android:listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:text="Date"
             android:textColor="@color/black"
-            android:textSize="32sp" />
+            android:textSize="24sp"
+            android:typeface="serif" />
 
         <TextView
             android:id="@+id/keep_walking_present_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:hint="Date/Time"
             android:padding="5dp"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            android:typeface="serif" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,7 +66,9 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:text="Save"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            android:typeface="serif" />
     </LinearLayout>
 
 </LinearLayout>

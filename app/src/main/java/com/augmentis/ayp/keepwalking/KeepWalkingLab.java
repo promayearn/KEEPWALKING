@@ -27,12 +27,14 @@ public class KeepWalkingLab {
     private KeepWalkingLab() {
         keepWalkingsList = new ArrayList<>();
 
-        for (int i = 1; i <= 100; i++) {
-            KeepWalking keepWalking = new KeepWalking();
-            keepWalking.setTitle("Title #" + i);
+        KeepWalking keepWalking = new KeepWalking();
+        keepWalking.setTitle("Title #1");
 
-            keepWalkingsList.add(keepWalking);
-        }
+        KeepWalking keepWalking1 = new KeepWalking();
+        keepWalking1.setTitle("Title #2");
+
+        keepWalkingsList.add(keepWalking);
+        keepWalkingsList.add(keepWalking1);
     }
 
     public KeepWalking getKeepWalkingById(UUID uuid) {
@@ -58,13 +60,4 @@ public class KeepWalkingLab {
         return this.keepWalkingsList;
     }
 
-    public static void main(String[] args) {
-        KeepWalkingLab keepWalkingLab = KeepWalkingLab.getInstance(null);
-        List<KeepWalking> keepWalkingsList = keepWalkingLab.getKeepWalking();
-        int size = keepWalkingsList.size();
-        for (int i = 0; i < size; i++) {
-            System.out.println(keepWalkingsList.get(i));
-        }
-        System.out.println(keepWalkingsList.toString());
-    }
 }

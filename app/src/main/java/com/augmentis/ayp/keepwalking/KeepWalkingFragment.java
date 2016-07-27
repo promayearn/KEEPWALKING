@@ -1,5 +1,7 @@
 package com.augmentis.ayp.keepwalking;
 
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +23,9 @@ import java.util.UUID;
  * Created by Chayanit on 7/27/2016.
  */
 public class KeepWalkingFragment extends Fragment {
+
     private static final String KEEP_WALKING_UUID = "KeepWalkingFragment.KEEP_WALKING_UUID";
+    private static final String ARG_PARAM2 = "param2";
 
     protected static final String TAG = "KeepWalkingFragment";
 
@@ -30,15 +34,17 @@ public class KeepWalkingFragment extends Fragment {
     private Button keepWalkingSaveButton;
 
     private KeepWalking keepWalking;
+    private String newTitleText;
+    private boolean isNewKeepWalking;
 
     public KeepWalkingFragment() {
     }
 
-    public static KeepWalkingFragment newInstance(UUID keepWalkingUuid) {
+    public static KeepWalkingFragment newInstance(UUID keepWalkingUuid, String param2) {
         Log.d(TAG, "new Instance");
         Bundle args = new Bundle();
         args.putSerializable(KEEP_WALKING_UUID, keepWalkingUuid);
-
+        args.putString(ARG_PARAM2, param2);
         KeepWalkingFragment keepWalkingFragment = new KeepWalkingFragment();
         keepWalkingFragment.setArguments(args);
         return keepWalkingFragment;
@@ -58,6 +64,14 @@ public class KeepWalkingFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_keep_walking_new_data, container, false);
 
         keepWalkingTitleEditText = (EditText) v.findViewById(R.id.keep_walking_title);
+        if (keepWalking == null) {
+            isNewKeepWalking = true;
+            keepWalking = new KeepWalking();
+            keepWalking.setTitle("");
+        } else {
+            isNewKeepWalking = false;
+        }
+
         keepWalkingTitleEditText.setText(keepWalking.getTitle());
         keepWalkingTitleEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -67,7 +81,7 @@ public class KeepWalkingFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                keepWalking.setTitle(charSequence.toString());
+                newTitleText = charSequence.toString();
             }
 
             @Override
@@ -81,6 +95,20 @@ public class KeepWalkingFragment extends Fragment {
         keepWalkingDateTextView.setText(getFormattedDate(date));
 
         keepWalkingSaveButton = (Button) v.findViewById(R.id.keep_walking_save);
+        keepWalkingSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                KeepWalkingLab keepWalkingLab = KeepWalkingLab.getInstance(getActivity());
+                if (isNewKeepWalking) {
+                    keepWalkingLab.keepWalkingsList.add(keepWalking);
+
+                    Intent intent = new Intent(getContext(), KeepWalkingListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                keepWalking.setTitle(newTitleText);
+            }
+        });
 
         return v;
     }
