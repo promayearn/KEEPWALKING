@@ -1,7 +1,6 @@
 package com.augmentis.ayp.keepwalking;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -101,12 +100,14 @@ public class KeepWalkingFragment extends Fragment {
                 KeepWalkingLab keepWalkingLab = KeepWalkingLab.getInstance(getActivity());
                 if (isNewKeepWalking) {
                     keepWalkingLab.keepWalkingsList.add(keepWalking);
-
-                    Intent intent = new Intent(getContext(), KeepWalkingListActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                 }
+                Date date = new Date();
                 keepWalking.setTitle(newTitleText);
+                keepWalking.setDate(date);
+
+                Intent intent = new Intent(getContext(), KeepWalkingListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
 
