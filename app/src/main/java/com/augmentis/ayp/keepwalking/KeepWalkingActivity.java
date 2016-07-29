@@ -25,7 +25,7 @@ public class KeepWalkingActivity extends SingleFragmentActivity {
     @Override
     protected Fragment onCreateFragment() {
         UUID keepWalkingUuid = (UUID) getIntent().getSerializableExtra(KEEP_WALKING_ID);
-        Fragment fragment = KeepWalkingFragment.newInstance(keepWalkingUuid, "");
+        Fragment fragment = KeepWalkingDialogFragment.newInstance(keepWalkingUuid, "");
         Log.d(TAG, "Create Fragmeny !!");
         return fragment;
     }

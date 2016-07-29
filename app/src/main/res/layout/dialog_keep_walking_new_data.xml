@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:typeface="serif" />
+
+        <EditText
+            android:id="@+id/keep_walking_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@color/white"
+            android:hint="Add Title"
+            android:paddingLeft="5dp"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            android:typeface="serif" />
+
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="Date"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/keep_walking_present_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="Date/Time"
+            android:padding="5dp"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            android:typeface="serif" />
+    </LinearLayout>
 </LinearLayout>

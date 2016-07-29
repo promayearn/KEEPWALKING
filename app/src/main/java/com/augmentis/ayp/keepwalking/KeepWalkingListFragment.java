@@ -4,9 +4,9 @@ package com.augmentis.ayp.keepwalking;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Keep;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,12 +26,18 @@ public class KeepWalkingListFragment extends Fragment {
     protected static final String TAG = "KeepWalkingListFragment";
 
     private static final int REQUEST_UPDATE_KEEP_WALKING = 23340;
+    private static final int REQUEST_KEEP_WALKING = 23341;
+    private static final String DIALOG_KEEP_WALKING = "DialogKeepWalking";
 
     private RecyclerView keepWalkingRecyclerView;
     private Button keepWalkingAddButton;
     private KeepWalkingAdapter adapter;
     private Integer[] keepWalkingPosition;
     private KeepWalking _keepWalking;
+
+    public KeepWalkingListFragment(){
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,9 +69,12 @@ public class KeepWalkingListFragment extends Fragment {
         keepWalkingAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 _keepWalking = new KeepWalking();
-                Intent intent = KeepWalkingActivity.newIntent(getActivity(), _keepWalking.getUuid());
-                startActivityForResult(intent, REQUEST_UPDATE_KEEP_WALKING);
+                FragmentManager fm = getFragmentManager();
+                KeepWalkingDialogFragment dialogFragment = KeepWalkingDialogFragment.newInstance(_keepWalking.getUuid(), "false");
+                dialogFragment.setTargetFragment(KeepWalkingListFragment.this, REQUEST_KEEP_WALKING);
+                dialogFragment.show(fm, DIALOG_KEEP_WALKING);
             }
         });
 
@@ -111,8 +120,10 @@ public class KeepWalkingListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = KeepWalkingActivity.newIntent(getActivity(), _keepWalking.getUuid());
-            startActivityForResult(intent, REQUEST_UPDATE_KEEP_WALKING);
+            FragmentManager fm = getFragmentManager();
+            KeepWalkingDialogFragment dialogFragment = KeepWalkingDialogFragment.newInstance(_keepWalking.getUuid(), "True");
+            dialogFragment.setTargetFragment(KeepWalkingListFragment.this, REQUEST_KEEP_WALKING);
+            dialogFragment.show(fm, DIALOG_KEEP_WALKING);
         }
     }
 
