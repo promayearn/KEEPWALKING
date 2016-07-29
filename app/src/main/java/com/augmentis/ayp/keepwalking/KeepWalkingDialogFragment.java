@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -88,8 +87,8 @@ public class KeepWalkingDialogFragment extends DialogFragment implements DialogI
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(v);
-        builder.setTitle(R.string.add_dialog_title);
-        builder.setPositiveButton(android.R.string.ok, this);
+        builder.setTitle(R.string.app_name);
+        builder.setPositiveButton("SAVE", this);
 
         return builder.create();
     }
