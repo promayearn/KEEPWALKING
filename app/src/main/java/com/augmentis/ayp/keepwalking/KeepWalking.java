@@ -15,7 +15,11 @@ public class KeepWalking {
     private Date date;
 
     public KeepWalking() {
-        uuid = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public KeepWalking(UUID uuid) {
+        this.uuid = uuid;
         date = new Date();
     }
 

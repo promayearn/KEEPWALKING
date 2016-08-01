@@ -24,7 +24,6 @@ import java.util.UUID;
 public class KeepWalkingFragment extends Fragment {
 
     private static final String KEEP_WALKING_UUID = "KeepWalkingFragment.KEEP_WALKING_UUID";
-    private static final String ARG_PARAM2 = "param2";
 
     protected static final String TAG = "KeepWalkingFragment";
 
@@ -39,11 +38,10 @@ public class KeepWalkingFragment extends Fragment {
     public KeepWalkingFragment() {
     }
 
-    public static KeepWalkingFragment newInstance(UUID keepWalkingUuid, String param2) {
+    public static KeepWalkingFragment newInstance(UUID keepWalkingUuid) {
         Log.d(TAG, "new Instance");
         Bundle args = new Bundle();
         args.putSerializable(KEEP_WALKING_UUID, keepWalkingUuid);
-        args.putString(ARG_PARAM2, param2);
         KeepWalkingFragment keepWalkingFragment = new KeepWalkingFragment();
         keepWalkingFragment.setArguments(args);
         return keepWalkingFragment;
@@ -116,5 +114,12 @@ public class KeepWalkingFragment extends Fragment {
 
     private String getFormattedDate(Date date) {
         return new SimpleDateFormat("dd MMMM yyyy").format(date);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        KeepWalkingLab.getInstance(getActivity()).updateKeepWalking(keepWalking);
     }
 }

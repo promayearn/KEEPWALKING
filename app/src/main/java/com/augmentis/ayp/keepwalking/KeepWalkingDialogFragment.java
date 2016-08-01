@@ -57,11 +57,8 @@ public class KeepWalkingDialogFragment extends DialogFragment implements DialogI
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_keep_walking_new_data, null);
 
         keepWalkingTitleEditText = (EditText) v.findViewById(R.id.keep_walking_title);
-        if (keepWalking == null) {
-            Log.d(TAG, "KEEPWALKING = NULL");
-            keepWalking = new KeepWalking();
-            keepWalking.setTitle("");
-        }
+        keepWalking = new KeepWalking();
+        keepWalking.setTitle("");
 
         keepWalkingTitleEditText.setText(keepWalking.getTitle());
         keepWalkingTitleEditText.addTextChangedListener(new TextWatcher() {
@@ -89,6 +86,7 @@ public class KeepWalkingDialogFragment extends DialogFragment implements DialogI
         builder.setView(v);
         builder.setTitle(R.string.app_name);
         builder.setPositiveButton("SAVE", this);
+        builder.setNegativeButton("Delete", this);
 
         return builder.create();
     }
@@ -96,19 +94,27 @@ public class KeepWalkingDialogFragment extends DialogFragment implements DialogI
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
         KeepWalkingLab keepWalkingLab = KeepWalkingLab.getInstance(getActivity());
-        if (isEdit.equals("false")) {
-            keepWalkingLab.keepWalkingsList.add(keepWalking);
+        if(i == -1) {
+            if (isEdit.equals("false")) {
+                keepWalkingLab.addKeepWalking(keepWalking);
+            }
+            Date date = new Date();
+            keepWalking.setTitle(newTitleText);
+            keepWalking.setDate(date);
+        } else {
+            Log.d(TAG, "DELETE KEEPWALKING");
+            KeepWalkingLab.getInstance(getActivity()).deleteKeepWalking(keepWalking.getUuid());
+            getActivity().finish();
         }
-        Date date = new Date();
-        keepWalking.setTitle(newTitleText);
-        keepWalking.setDate(date);
 
         Intent intent = new Intent(getContext(), KeepWalkingListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+
     }
 
     private String getFormattedDate(Date date) {
         return new SimpleDateFormat("dd MMMM yyyy").format(date);
     }
+
 }

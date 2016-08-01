@@ -11,6 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,7 +33,6 @@ public class KeepWalkingListFragment extends Fragment {
     private static final String DIALOG_KEEP_WALKING = "DialogKeepWalking";
 
     private RecyclerView keepWalkingRecyclerView;
-    private Button keepWalkingAddButton;
     private KeepWalkingAdapter adapter;
     private Integer[] keepWalkingPosition;
     private KeepWalking _keepWalking;
@@ -40,8 +42,35 @@ public class KeepWalkingListFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.keep_walking_menu, menu);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_new_keep_walking:
+
+                _keepWalking = new KeepWalking();
+                FragmentManager fm = getFragmentManager();
+                KeepWalkingDialogFragment dialogFragment = KeepWalkingDialogFragment.newInstance(_keepWalking.getUuid(), "false");
+                dialogFragment.setTargetFragment(KeepWalkingListFragment.this, REQUEST_KEEP_WALKING);
+                dialogFragment.show(fm, DIALOG_KEEP_WALKING);
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -65,19 +94,6 @@ public class KeepWalkingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_keep_walking_list, container, false);
 
-        keepWalkingAddButton = (Button) v.findViewById(R.id.keep_walking_add);
-        keepWalkingAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                _keepWalking = new KeepWalking();
-                FragmentManager fm = getFragmentManager();
-                KeepWalkingDialogFragment dialogFragment = KeepWalkingDialogFragment.newInstance(_keepWalking.getUuid(), "false");
-                dialogFragment.setTargetFragment(KeepWalkingListFragment.this, REQUEST_KEEP_WALKING);
-                dialogFragment.show(fm, DIALOG_KEEP_WALKING);
-            }
-        });
-
         keepWalkingRecyclerView = (RecyclerView) v.findViewById(R.id.keep_walking_recycler_view);
         keepWalkingRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -85,13 +101,18 @@ public class KeepWalkingListFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Update UI
+     */
     private void updateUI() {
         KeepWalkingLab keepWalkingLab = KeepWalkingLab.getInstance(getActivity());
-        List<KeepWalking> keepWalkings = keepWalkingLab.getKeepWalking();
+        List<KeepWalking> keepWalking = keepWalkingLab.getKeepWalking();
+
         if (adapter == null) {
-            adapter = new KeepWalkingAdapter(keepWalkings);
+            adapter = new KeepWalkingAdapter(keepWalking);
             keepWalkingRecyclerView.setAdapter(adapter);
         } else {
+            adapter.setKeepWalkings(keepWalkingLab.getKeepWalking());
             adapter.notifyDataSetChanged();
         }
     }
@@ -146,6 +167,10 @@ public class KeepWalkingListFragment extends Fragment {
         public void onBindViewHolder(KeepWalkingHolder holder, int position) {
             KeepWalking keepWalking = this.keepWalkings.get(position);
             holder.bind(keepWalking, position);
+        }
+
+        protected void setKeepWalkings(List<KeepWalking> keepWalkings) {
+            this.keepWalkings = keepWalkings;
         }
 
         @Override
